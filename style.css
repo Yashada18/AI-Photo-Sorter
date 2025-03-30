@@ -1,82 +1,86 @@
+/* General Styles */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f9f9f9;
-}
-
-/* Navbar */
-.nav-link {
-    color: #333;
-    font-weight: 500;
-}
-
-.nav-link:hover {
-    color: #007bff;
+    margin: 0;
+    padding: 0;
 }
 
 /* Hero Section */
-.hero-img {
-    width: 500px; /* Increased image size */
-    transition: transform 0.3s ease-in-out;
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: white;
 }
 
-h1 {
-    font-size: 3.5rem; /* Increased font size */
-    color: #222;
-    animation: fadeInUp 1s ease-in-out;
+.content {
+    max-width: 50%;
 }
 
-p {
-    font-size: 1.2rem; /* Increased paragraph font size */
+.title {
+    font-size: 42px;
+    font-weight: bold;
+    line-height: 1.2;
 }
 
-/* Button Effects */
-.btn-primary {
-    background: #007bff;
-    border: none;
+.subtitle {
+    font-size: 18px;
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* Buttons */
+.btn {
+    margin-top: 15px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 6px;
     transition: all 0.3s ease-in-out;
 }
 
 .btn-primary:hover {
-    background: #0056b3;
-    transform: scale(1.05);
+    background-color: #ffcc00;
+    color: black;
 }
 
-.btn-outline-primary {
-    transition: all 0.3s ease-in-out;
+.btn-outline-secondary:hover {
+    background-color: white;
+    color: black;
 }
 
-.btn-outline-primary:hover {
-    background: #007bff;
-    color: white;
-    transform: scale(1.05);
+/* Illustration */
+.illustration img {
+    max-width: 400px;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
-/* Animations */
-.fade-in {
-    opacity: 0;
-    animation: fadeIn 1.5s ease-in-out forwards;
+/* Image Preview */
+#previewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    justify-content: center;
 }
 
-.title-animate {
-    animation: fadeInUp 1.2s ease-in-out;
+.preview-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    margin: 10px;
 }
 
-.bounce {
-    animation: bounce 2s infinite alternate;
+.preview-image:hover {
+    transform: scale(1.1);
 }
 
-/* Keyframes */
+/* Animation */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10px); }
 }
