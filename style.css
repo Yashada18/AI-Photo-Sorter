@@ -1,7 +1,10 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
-    text-align: center;
+}
+
+.navbar {
+    border-bottom: 1px solid #ddd;
 }
 
 .title-animate {
