@@ -7,8 +7,23 @@ body {
     border-bottom: 1px solid #ddd;
 }
 
+/* Reset font size to original */
+h1 {
+    font-size: 2.5rem; /* Adjusted to match previous size */
+}
+
+p {
+    font-size: 1.25rem; /* Adjusted for readability */
+}
+
 .title-animate {
     animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Reset button size */
+.btn-lg {
+    font-size: 1rem; /* Adjusted back to normal */
+    padding: 10px 20px;
 }
 
 .btn-animate {
@@ -19,14 +34,26 @@ body {
     transform: scale(1.05);
 }
 
+/* Image size reset */
+.hero-img {
+    max-width: 80%; /* Reduce size back to original */
+    height: auto;
+}
+
 .bounce {
     animation: bounce 2s infinite;
 }
 
-/* Image preview styling */
+/* Image preview section */
+#previewContainer {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 #previewContainer img {
-    width: 100px;
-    height: 100px;
+    width: 80px;  /* Reduce preview size */
+    height: 80px; /* Keep proportions */
     object-fit: cover;
     border-radius: 8px;
     border: 2px solid #ddd;
