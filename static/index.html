@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Grouping</title>
+</head>
+<body>
+    <h1>Upload Your Selfie</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('uploadForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            displayResults(data);
+        };
+
+        function displayResults(data) {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = ''; // Clear previous results
+
+    if (data.matches) {
+        resultsDiv.innerHTML = '<h2>Matching Photos:</h2>';
+        data.matches.forEach(match => {
+            const img = document.createElement('img');
+            img.src = match[0]; // Path to the matched image
+            img.style.width = '100px'; // Set a width for the image
+            img.style.margin = '10px';
+            resultsDiv.appendChild(img);
+        });
+    } else {
+        resultsDiv.innerHTML = `<p>${data.message}</p>`;
+    }
+}
+    </script>
+</body>
+</html>
