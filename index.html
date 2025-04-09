@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Photo Sorter</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body>
 
+<body>
     <!-- Header -->
     <nav class="navbar navbar-light bg-white px-4 py-3">
-        <a class="navbar-brand fw-bold fs-4" href="#">AI Photo Sorter</a>
+        <a class="navbar-brand fw-bold fs-4" href="/">AI Photo Sorter</a>
         <div>
             <a href="#" class="nav-link d-inline px-3">Upload</a>
             <a href="#" class="nav-link d-inline px-3">Sorting Demo</a>
@@ -19,26 +20,71 @@
         </div>
     </nav>
 
-    <!-- main Section -->
-    <section class="container d-flex align-items-center justify-content-between mt-5 fade-in">
-        <div class="text-start">
-            <h1 class="display-3 fw-bold title-animate">Smart AI-Powered <br> Photo Sorting</h1>
-            <p class="text-muted mt-3 fs-5">Upload images and let AI categorize them effortlessly!</p>
+    <!-- Main Section -->
+    <section class="container mt-5 fade-in">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="display-4 fw-bold title-animate">Smart AI-Powered Photo Sorting</h1>
+                <p class="text-muted fs-5">Upload your dataset folder and a selfie. Let the AI find matches!</p>
 
-            <!-- Upload Image Button -->
-            <input type="file" id="imageUpload" multiple accept="image/*" style="display: none;">
-            <button id="uploadBtn" class="btn btn-primary btn-lg me-2 btn-animate">Upload Images</button>
-            <button id="viewSample" class="btn btn-outline-secondary btn-lg btn-animate">View Sample Dataset</button>
+                <!-- Upload Image Buttons -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">1. Upload Folder of Images</label><br>
+                    <input type="file" id="folderUpload" multiple webkitdirectory directory style="display: none;">
+                    <button id="uploadFolderBtn" class="btn btn-primary btn-sm">Upload Folder</button>
+                </div>
 
-            <!-- Image Preview Section -->
-            <div id="previewContainer" class="mt-4 d-flex flex-wrap gap-2"></div>
-        </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">2. Upload a Selfie</label><br>
+                    <input type="file" id="selfieUpload" accept="image/*" style="display: none;">
+                    <button id="uploadSelfieBtn" class="btn btn-secondary btn-sm">Upload Selfie</button>
+                </div>
 
-        <div>
-            <img src="ai-sorting-illustration.png" alt="AI Sorting Illustration" class="hero-img bounce">
+                <!-- Selfie Preview Section -->
+                <div id="selfiePreviewContainer" class="mt-4">
+                    <h5>Uploaded Selfie:</h5>
+                    <img id="selfiePreview" class="img-thumbnail" style="max-width: 200px;" alt="Your Selfie will appear here">
+                </div>
+
+                <!-- Image Preview Section -->
+                <div id="previewContainer" class="mt-4 d-flex flex-wrap gap-2"></div>
+
+                <!-- Matching Result Section -->
+                <div id="matchResult" class="mt-4">
+                    <h5>Matched Images:</h5>
+                    <div id="matchedImages" class="d-flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <img src="{{ url_for('static', filename='ai-sorting-illustration.png') }}" alt="AI Sorting Illustration"
+                    class="hero-img bounce img-fluid" style="max-width: 500px;">
+            </div>
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <!-- Script -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        // Folder upload trigger
+        document.getElementById('uploadFolderBtn').addEventListener('click', () => {
+            document.getElementById('folderUpload').click();
+        });
+
+        // Selfie upload trigger
+        document.getElementById('uploadSelfieBtn').addEventListener('click', () => {
+            document.getElementById('selfieUpload').click();
+        });
+
+        // Selfie preview
+        document.getElementById('selfieUpload').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const preview = document.getElementById('selfiePreview');
+                preview.src = URL.createObjectURL(file);
+            }
+        });
+    </script>
 </body>
+
 </html>
