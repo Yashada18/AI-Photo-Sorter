@@ -24,7 +24,8 @@ body {
 }
 
 /* Image preview styling */
-#previewContainer img {
+#previewContainer img,
+#matchedImages img {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -34,18 +35,33 @@ body {
     transition: 0.3s;
 }
 
-#previewContainer img:hover {
+#previewContainer img:hover,
+#matchedImages img:hover {
     transform: scale(1.1);
     border-color: #007bff;
 }
 
 /* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
