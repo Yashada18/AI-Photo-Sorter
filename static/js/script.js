@@ -1,55 +1,85 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const uploadBtn = document.getElementById("uploadBtn");
-    const imageUpload = document.getElementById("imageUpload");
+    const folderBtn = document.getElementById("uploadFolderBtn");
+    const selfieBtn = document.getElementById("uploadSelfieBtn");
+    const folderInput = document.getElementById("folderUpload");
+    const selfieInput = document.getElementById("selfieUpload");
     const previewContainer = document.getElementById("previewContainer");
+    const matchedImages = document.getElementById("matchedImages");
 
-    // Open file input when upload button is clicked
-    uploadBtn.addEventListener("click", () => {
-        imageUpload.click(); // Trigger file input when upload button is clicked
+    // Upload folder
+    folderBtn.addEventListener("click", () => {
+        folderInput.click();
     });
 
-    // Handle file selection and preview
-    imageUpload.addEventListener("change", (event) => {
-        previewContainer.innerHTML = ""; // Clear previous previews
-        const files = event.target.files;
+    // Upload selfie
+    selfieBtn.addEventListener("click", () => {
+        selfieInput.click();
+    });
 
+    // Handle folder upload
+    folderInput.addEventListener("change", () => {
+        const files = folderInput.files;
         if (files.length === 0) return;
 
-        // Display selected images as preview
+        previewContainer.innerHTML = "";
+        const formData = new FormData();
+        for (const file of files) {
+            formData.append("images", file);
+        }
+
         for (const file of files) {
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = (e) => {
                 const img = document.createElement("img");
                 img.src = e.target.result;
-                img.style.maxWidth = "100px"; // Optional: to scale down images in preview
-                img.style.margin = "10px";
                 previewContainer.appendChild(img);
             };
             reader.readAsDataURL(file);
         }
 
-        // Now upload the selected files
-        const formData = new FormData();
-        for (const file of files) {
-            formData.append("images", file); // Append each file to the FormData
-        }
-
-        // Upload the images via fetch API
-        fetch("/upload", {
+        fetch("/upload_folder", {
             method: "POST",
-            body: formData, // Send the form data with files
+            body: formData,
         })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
-                if (data.message) {
-                    alert(data.message); // Show success message
-                } else if (data.error) {
-                    alert(data.error); // Show error message
+                alert(data.message || "Folder uploaded");
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Failed to upload folder.");
+            });
+    });
+
+    // Handle selfie upload and show matches
+    selfieInput.addEventListener("change", () => {
+        const file = selfieInput.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/upload_selfie", {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                matchedImages.innerHTML = "";
+                if (data.matches && data.matches.length > 0) {
+                    data.matches.forEach(match => {
+                        console.log("Single Image Match: ", match);
+                        const img = document.createElement("img");
+                        img.src = match.path // path
+                        matchedImages.appendChild(img);
+                    });
+                } else {
+                    matchedImages.innerHTML = "<p>No similar faces found.</p>";
                 }
             })
-            .catch(error => {
-                console.error("Error uploading files:", error);
-                alert("Something went wrong during the upload.");
+            .catch(err => {
+                console.error(err);
+                alert("Failed to upload selfie.");
             });
     });
 });
